@@ -27,6 +27,10 @@ public class WatchStore {
         return instance;
     }
 
+    public List<Watch> getWatches() {
+        return new ArrayList<>(watches);
+    }
+
     public void addWatch(Watch watch) {
         watches.add(watch);
     }

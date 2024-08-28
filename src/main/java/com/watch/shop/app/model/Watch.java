@@ -11,10 +11,10 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "id")
 public class Watch {
     private final UUID id = UUID.randomUUID();
-    private Double price;
-    private Color color;
-    private LocalDate arrivalDate;
-    private WatchType type;
     private String brand;
     private String model;
+    private Color color;
+    private WatchType type;
+    private Double price;
+    private LocalDate arrivalDate;
 }
