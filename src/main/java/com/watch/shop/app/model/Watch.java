@@ -1,20 +1,19 @@
 package com.watch.shop.app.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(of = "id")
 public class Watch {
+    private final UUID id = UUID.randomUUID();
     private Double price;
     private Color color;
-    private LocalDateTime arrivalDate;
+    private LocalDate arrivalDate;
     private WatchType type;
     private String brand;
     private String model;
