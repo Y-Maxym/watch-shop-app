@@ -10,7 +10,7 @@ public interface WatchService {
 
     List<Watch> sortWatchesByParam(String param);
 
-    Double getAllPrices();
+    Double getTotalCost();
 
     void insertWatch(Watch watch);
 }
