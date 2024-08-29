@@ -12,8 +12,9 @@ public class WatchView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public Integer getUserChoice() {
+    public String getUserChoice() {
         String menu = """
+                
                 Choose an action:
                 1. Display all watches
                 2. Sort by parameter and display all watches
@@ -22,11 +23,12 @@ public class WatchView {
                 5. Exit
                 """;
         System.out.println(menu);
-        return scanner.nextInt();
+        return scanner.nextLine();
     }
 
-    public Integer sortByParam() {
+    public String sortByParam() {
         String menu = """
+                
                 Choose a parameter:
                 1. Price
                 2. Color
@@ -34,42 +36,44 @@ public class WatchView {
                 4. Exit
                 """;
         System.out.println(menu);
-        return scanner.nextInt();
+        return scanner.nextLine();
     }
 
     public void displayAllWatches(List<Watch> watches) {
-        System.out.println("_".repeat(67));
-        System.out.printf("|%-12s| %-10s| %-10s| %-10s| %-10s| %-10s|%n", "Brand", "Model", "Color", "Type", "Price", "Arrival Date");
-        System.out.printf("|%-12s|%-10s|%-10s|%-10s|%-10s|%-10s|%n", "_".repeat(12), "_".repeat(11), "_".repeat(11), "_".repeat(11), "_".repeat(11), "_".repeat(11));
-        watches.forEach(w -> System.out.printf("|%-12s| %-25s| %-10s| %-10s| %-10s| %-10s|%n", w.getBrand(), w.getModel(), w.getColor(), w.getType(), w.getPrice(), w.getArrivalDate()));
-        System.out.println("|" + "_".repeat(65) + "|");
+        System.out.println("_".repeat(97));
+        System.out.printf("| %-12s| %-26s| %-11s| %-11s| %-11s| %-13s|%n", "Brand", "Model", "Color", "Type", "Price", "Arrival Date");
+        System.out.printf("| %-12s| %-26s| %-11s| %-11s| %-11s| %-13s|%n", "_".repeat(12), "_".repeat(26), "_".repeat(11), "_".repeat(11), "_".repeat(11), "_".repeat(13));
+        watches.forEach(w -> System.out.printf("| %-12s| %-26s| %-11s| %-11s| %-11s| %-13s|%n", w.getBrand(), w.getModel(), w.getColor(), w.getType(), w.getPrice(), w.getArrivalDate()));
+        System.out.println("|" + "_".repeat(95) + "|");
     }
 
     public void displayTotalCost(Double totalCost) {
         String message = """
+                
                 Total cost:
                 %.2f
                 """.formatted(totalCost);
-        System.out.println(message);
+        System.out.print(message);
     }
 
     public Watch addNewWatch() {
-        System.out.println("Enter Brand: ");
+
+        System.out.println("Enter Brand:");
         String brand = scanner.nextLine();
 
-        System.out.println("Enter Model: ");
+        System.out.println("Enter Model:");
         String model = scanner.nextLine();
 
-        System.out.println("Enter Color (WHITE, SILVER, GOLD, BLUE, RED, BLACK): ");
-        String color = scanner.nextLine();
+        System.out.println("Enter Color (WHITE, SILVER, GOLD, BLUE, RED, BLACK):");
+        String color = scanner.nextLine().toUpperCase();
 
-        System.out.println("Enter Type (QUARTZ, MECHANICAL, SOLAR, SMART): ");
-        String type = scanner.nextLine();
+        System.out.println("Enter Type (QUARTZ, MECHANICAL, SOLAR, SMART):");
+        String type = scanner.nextLine().toUpperCase();
 
         System.out.println("Enter Price: ");
-        Double price = scanner.nextDouble();
+        String price = scanner.nextLine();
 
-        System.out.println("Enter Arrival Date (YYYY-MM-DD): ");
+        System.out.println("Enter Arrival Date (YYYY-MM-DD):");
         String arrivalDate = scanner.nextLine();
 
         return Watch.builder()
@@ -77,9 +81,8 @@ public class WatchView {
                 .model(model)
                 .color(Color.valueOf(color))
                 .type(WatchType.valueOf(type))
-                .price(price)
+                .price(Double.parseDouble(price))
                 .arrivalDate(LocalDate.parse(arrivalDate))
                 .build();
     }
-
 }
