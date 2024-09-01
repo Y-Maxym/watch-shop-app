@@ -1,7 +1,7 @@
 package com.watch.shop.app.model.repository;
 
 import com.watch.shop.app.model.entity.Watch;
-import com.watch.shop.app.model.util.InitDataGenerator;
+import com.watch.shop.app.util.InitDataGenerator;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,6 +5,9 @@ import com.watch.shop.app.model.service.WatchService;
 import com.watch.shop.app.view.WatchView;
 import lombok.RequiredArgsConstructor;
 
+import static com.watch.shop.app.util.Constants.INVALID_CHOICE_MESSAGE;
+import static com.watch.shop.app.util.Constants.INVALID_INPUT_MESSAGE;
+
 @RequiredArgsConstructor
 public class WatchController {
 
@@ -27,11 +30,11 @@ public class WatchController {
                         Watch watch = menuHandler.printNewWatchMenu();
                         watchService.insertWatch(watch);
                     } catch (Exception e) {
-                        watchView.printMessage("\nInvalid input");
+                        watchView.printMessage(INVALID_INPUT_MESSAGE);
                     }
                 }
                 case "5" -> running = false;
-                default -> watchView.printMessage("\nInvalid choice");
+                default -> watchView.printMessage(INVALID_CHOICE_MESSAGE);
             }
         }
     }
@@ -43,11 +46,11 @@ public class WatchController {
             String param = menuHandler.printSortMenu();
 
             switch (param) {
-                case "1" -> menuHandler.displayAllWatches(watchService.sortWatchesByParam("price"));
-                case "2" -> menuHandler.displayAllWatches(watchService.sortWatchesByParam("color"));
-                case "3" -> menuHandler.displayAllWatches(watchService.sortWatchesByParam("arrival date"));
+                case "1" -> menuHandler.displayAllWatches(watchService.getSortedWatchesByPrice());
+                case "2" -> menuHandler.displayAllWatches(watchService.getSortedWatchesByColor());
+                case "3" -> menuHandler.displayAllWatches(watchService.getSortedWatchesByArrivalDate());
                 case "4" -> running = false;
-                default -> watchView.printMessage("\nInvalid choice");
+                default -> watchView.printMessage(INVALID_CHOICE_MESSAGE);
             }
         }
     }

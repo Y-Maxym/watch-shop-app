@@ -9,7 +9,11 @@ public interface WatchService {
 
     List<Watch> getWatches();
 
-    List<Watch> sortWatchesByParam(String param);
+    List<Watch> getSortedWatchesByPrice();
+
+    List<Watch> getSortedWatchesByColor();
+
+    List<Watch> getSortedWatchesByArrivalDate();
 
     BigDecimal getTotalCost();
 

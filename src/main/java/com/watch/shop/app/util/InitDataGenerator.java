@@ -1,4 +1,4 @@
-package com.watch.shop.app.model.util;
+package com.watch.shop.app.util;
 
 import com.watch.shop.app.model.entity.Color;
 import com.watch.shop.app.model.entity.MechanicalWatch;

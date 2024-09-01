@@ -19,19 +19,40 @@ import lombok.RequiredArgsConstructor;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.EnumSet;
 import java.util.List;
 
-import static com.watch.shop.app.controller.MenuConstants.END_SEPARATOR;
-import static com.watch.shop.app.controller.MenuConstants.FORMAT_HEADER;
-import static com.watch.shop.app.controller.MenuConstants.FORMAT_ROW;
-import static com.watch.shop.app.controller.MenuConstants.FORMAT_SEPARATOR;
-import static com.watch.shop.app.controller.MenuConstants.MENU;
-import static com.watch.shop.app.controller.MenuConstants.SORT_MENU;
-import static com.watch.shop.app.controller.MenuConstants.START_SEPARATOR;
-import static com.watch.shop.app.controller.MenuConstants.TOTAL_COST_MESSAGE;
+import static com.watch.shop.app.util.Constants.END_SEPARATOR;
+import static com.watch.shop.app.util.Constants.ENTER_ARRIVAL_DATE_MESSAGE;
+import static com.watch.shop.app.util.Constants.ENTER_BRAND_MESSAGE;
+import static com.watch.shop.app.util.Constants.ENTER_COLOR_MESSAGE;
+import static com.watch.shop.app.util.Constants.ENTER_MODEL_MESSAGE;
+import static com.watch.shop.app.util.Constants.ENTER_PRICE_MESSAGE;
+import static com.watch.shop.app.util.Constants.ENTER_TYPE_MESSAGE;
+import static com.watch.shop.app.util.Constants.FORMAT_HEADER;
+import static com.watch.shop.app.util.Constants.FORMAT_ROW;
+import static com.watch.shop.app.util.Constants.FORMAT_SEPARATOR;
+import static com.watch.shop.app.util.Constants.HAS_HEART_RATE_MONITOR_MESSAGE;
+import static com.watch.shop.app.util.Constants.IS_AUTOMATIC_MESSAGE;
+import static com.watch.shop.app.util.Constants.LUMINOUS_HANDS_MESSAGE;
+import static com.watch.shop.app.util.Constants.MAX_CHARGE_TIME_MESSAGE;
+import static com.watch.shop.app.util.Constants.MENU;
+import static com.watch.shop.app.util.Constants.OPERATION_SYSTEM_MESSAGE;
+import static com.watch.shop.app.util.Constants.POWER_RESERVE_MESSAGE;
+import static com.watch.shop.app.util.Constants.SEPARATOR;
+import static com.watch.shop.app.util.Constants.SORT_MENU;
+import static com.watch.shop.app.util.Constants.START_SEPARATOR;
+import static com.watch.shop.app.util.Constants.TOTAL_COST_MESSAGE;
 
 @RequiredArgsConstructor
 public class MenuHandler {
+
+    public static final String BRAND = "Brand";
+    public static final String MODEL = "Model";
+    public static final String COLOR = "Color";
+    public static final String TYPE = "Type";
+    public static final String PRICE = "Price";
+    public static final String ARRIVAL_DATE = "Arrival Date";
 
     private final WatchView watchView;
     private final InputHandler inputHandler = new InputHandler();
@@ -50,8 +71,8 @@ public class MenuHandler {
 
     public void displayAllWatches(List<Watch> watches) {
         watchView.printMessage(START_SEPARATOR);
-        watchView.printFormattedMessage(FORMAT_HEADER, "Brand", "Model", "Color", "Type", "Price", "Arrival Date");
-        watchView.printFormattedMessage(FORMAT_SEPARATOR, "_".repeat(13), "_".repeat(27), "_".repeat(12), "_".repeat(12), "_".repeat(12), "_".repeat(14));
+        watchView.printFormattedMessage(FORMAT_HEADER, BRAND, MODEL, COLOR, TYPE, PRICE, ARRIVAL_DATE);
+        watchView.printFormattedMessage(FORMAT_SEPARATOR, SEPARATOR.repeat(13), SEPARATOR.repeat(27), SEPARATOR.repeat(12), SEPARATOR.repeat(12), SEPARATOR.repeat(12), SEPARATOR.repeat(14));
 
         watches.forEach(w -> watchView.printFormattedMessage(FORMAT_ROW, w.getBrand(), w.getModel(), w.getColor(), w.getType(), w.getPrice(), w.getArrivalDate()));
 
@@ -59,27 +80,26 @@ public class MenuHandler {
     }
 
     public void displayTotalCost(BigDecimal totalCost) {
-        String message = TOTAL_COST_MESSAGE.formatted(totalCost);
-        watchView.printMessage(message);
+        watchView.printFormattedMessage(TOTAL_COST_MESSAGE, totalCost);
     }
 
     public Watch printNewWatchMenu() {
-        watchView.printMessage("Enter Brand:");
+        watchView.printMessage(ENTER_BRAND_MESSAGE);
         String brand = inputHandler.readLineFromConsole();
 
-        watchView.printMessage("Enter Model:");
+        watchView.printMessage(ENTER_MODEL_MESSAGE);
         String model = inputHandler.readLineFromConsole();
 
-        watchView.printMessage("Enter Color (WHITE, SILVER, GOLD, BLUE, RED, BLACK):");
+        watchView.printFormattedMessage(ENTER_COLOR_MESSAGE, extractEnumValues(Color.class));
         String color = inputHandler.readLineFromConsole().toUpperCase();
 
-        watchView.printMessage("Enter Type (QUARTZ, MECHANICAL, SOLAR, SMART):");
+        watchView.printFormattedMessage(ENTER_TYPE_MESSAGE, extractEnumValues(WatchType.class));
         String type = inputHandler.readLineFromConsole().toUpperCase();
 
-        watchView.printMessage("Enter Price: ");
+        watchView.printMessage(ENTER_PRICE_MESSAGE);
         String price = inputHandler.readLineFromConsole();
 
-        watchView.printMessage("Enter Arrival Date (YYYY-MM-DD):");
+        watchView.printMessage(ENTER_ARRIVAL_DATE_MESSAGE);
         String arrivalDate = inputHandler.readLineFromConsole();
 
         return createWatchBuilderByType(WatchType.valueOf(type))
@@ -102,7 +122,7 @@ public class MenuHandler {
     }
 
     private QuartzWatchBuilder<?, ?> createQuartzWatchBuilder() {
-        watchView.printMessage("Does it have luminous hands? (true or false)");
+        watchView.printMessage(LUMINOUS_HANDS_MESSAGE);
         String luminousHands = inputHandler.readLineFromConsole();
 
         return QuartzWatch.builder()
@@ -110,10 +130,10 @@ public class MenuHandler {
     }
 
     private MechanicalWatchBuilder<?, ?> createMechanicalWatchBuilder() {
-        watchView.printMessage("How much power reserve (hours)?");
+        watchView.printMessage(POWER_RESERVE_MESSAGE);
         String powerReserve = inputHandler.readLineFromConsole();
 
-        watchView.printMessage("Is it automatic? (true or false)");
+        watchView.printMessage(IS_AUTOMATIC_MESSAGE);
         String isAutomatic = inputHandler.readLineFromConsole();
 
         return MechanicalWatch.builder()
@@ -122,7 +142,7 @@ public class MenuHandler {
     }
 
     private SolarWatchBuilder<?, ?> createSolarWatchBuilder() {
-        watchView.printMessage("How long does it take to charge (hours)?");
+        watchView.printMessage(MAX_CHARGE_TIME_MESSAGE);
         String charge = inputHandler.readLineFromConsole();
 
         return SolarWatch.builder()
@@ -130,14 +150,19 @@ public class MenuHandler {
     }
 
     private SmartWatchBuilder<?, ?> createSmartWatchBuilder() {
-        watchView.printMessage("Does it have a heart rate monitor? (true or false)");
+        watchView.printMessage(HAS_HEART_RATE_MONITOR_MESSAGE);
         String hasHeartRateMonitor = inputHandler.readLineFromConsole();
 
-        watchView.printMessage("Enter OS (WEAR_OS, TIZEN_OS, WATCH_OS):");
-        String os = inputHandler.readLineFromConsole().toUpperCase();
+        watchView.printFormattedMessage(OPERATION_SYSTEM_MESSAGE, extractEnumValues(OperationSystem.class));
+        String operationSystem = inputHandler.readLineFromConsole().toUpperCase();
 
         return SmartWatch.builder()
                 .hasHeartRateMonitor(Boolean.parseBoolean(hasHeartRateMonitor))
-                .operationSystem(OperationSystem.valueOf(os));
+                .operationSystem(OperationSystem.valueOf(operationSystem));
+    }
+
+    @SuppressWarnings("all")
+    private <E extends Enum<E>> String extractEnumValues(Class<E> enumClass) {
+        return EnumSet.allOf(enumClass).toString();
     }
 }
