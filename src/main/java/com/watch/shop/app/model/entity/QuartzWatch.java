@@ -8,5 +8,5 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class QuartzWatch extends Watch {
-    private boolean luminousHands;
+    private boolean hasLuminousHands;
 }

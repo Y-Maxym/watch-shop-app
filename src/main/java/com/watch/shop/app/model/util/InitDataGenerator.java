@@ -2,7 +2,7 @@ package com.watch.shop.app.model.util;
 
 import com.watch.shop.app.model.entity.Color;
 import com.watch.shop.app.model.entity.MechanicalWatch;
-import com.watch.shop.app.model.entity.OS;
+import com.watch.shop.app.model.entity.OperationSystem;
 import com.watch.shop.app.model.entity.QuartzWatch;
 import com.watch.shop.app.model.entity.SmartWatch;
 import com.watch.shop.app.model.entity.SolarWatch;
@@ -26,7 +26,7 @@ public class InitDataGenerator {
                     .type(WatchType.QUARTZ)
                     .brand("Casio")
                     .model("G-Shock")
-                    .luminousHands(true)
+                    .hasLuminousHands(true)
                     .build());
 
             add(MechanicalWatch.builder()
@@ -58,7 +58,7 @@ public class InitDataGenerator {
                     .brand("Apple")
                     .model("Apple Watch Series 7")
                     .hasHeartRateMonitor(true)
-                    .os(OS.WATCH_OS)
+                    .operationSystem(OperationSystem.WATCH_OS)
                     .build());
 
             add(QuartzWatch.builder()
@@ -68,7 +68,7 @@ public class InitDataGenerator {
                     .type(WatchType.QUARTZ)
                     .brand("Fossil")
                     .model("Hybrid HR")
-                    .luminousHands(false)
+                    .hasLuminousHands(false)
                     .build());
         }};
     }

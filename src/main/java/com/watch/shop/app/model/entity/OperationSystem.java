@@ -1,5 +1,5 @@
 package com.watch.shop.app.model.entity;
 
-public enum OS {
+public enum OperationSystem {
     WEAR_OS, TIZEN_OS, WATCH_OS
 }

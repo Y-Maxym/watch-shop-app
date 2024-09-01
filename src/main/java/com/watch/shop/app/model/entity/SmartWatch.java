@@ -9,5 +9,5 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class SmartWatch extends Watch {
     private boolean hasHeartRateMonitor;
-    private OS os;
+    private OperationSystem operationSystem;
 }

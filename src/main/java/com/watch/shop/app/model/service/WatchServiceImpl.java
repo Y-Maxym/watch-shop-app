@@ -27,9 +27,9 @@ public class WatchServiceImpl implements WatchService {
             throw new IllegalArgumentException("Param cannot be empty");
         }
 
+        List<Watch> watches = watchStore.getWatches();
         Comparator<Watch> comparator = resolveComparator(param);
 
-        List<Watch> watches = watchStore.getWatches();
         watches.sort(comparator);
 
         return watches;
@@ -46,7 +46,6 @@ public class WatchServiceImpl implements WatchService {
     }
 
     private Comparator<Watch> resolveComparator(String param) {
-
         return switch (param) {
             case PRICE_PARAMETER -> Comparator.comparing(Watch::getPrice);
             case COLOR_PARAMETER -> Comparator.comparing(watch -> watch.getColor().name());

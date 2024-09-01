@@ -10,20 +10,21 @@ public class WatchController {
 
     private final WatchService watchService;
     private final WatchView watchView;
+    private final MenuHandler menuHandler;
 
     public void run() {
         boolean running = true;
 
         while (running) {
-            String choice = watchView.getUserChoice();
+            String choice = menuHandler.printMainMenu();
 
             switch (choice) {
-                case "1" -> watchView.displayAllWatches(watchService.getWatches());
+                case "1" -> menuHandler.displayAllWatches(watchService.getWatches());
                 case "2" -> sortChoice();
-                case "3" -> watchView.displayTotalCost(watchService.getTotalCost());
+                case "3" -> menuHandler.displayTotalCost(watchService.getTotalCost());
                 case "4" -> {
                     try {
-                        Watch watch = watchView.addNewWatch();
+                        Watch watch = menuHandler.printNewWatchMenu();
                         watchService.insertWatch(watch);
                     } catch (Exception e) {
                         watchView.printMessage("\nInvalid input");
@@ -39,12 +40,12 @@ public class WatchController {
         boolean running = true;
 
         while (running) {
-            String param = watchView.sortByParam();
+            String param = menuHandler.printSortMenu();
 
             switch (param) {
-                case "1" -> watchView.displayAllWatches(watchService.sortWatchesByParam("price"));
-                case "2" -> watchView.displayAllWatches(watchService.sortWatchesByParam("color"));
-                case "3" -> watchView.displayAllWatches(watchService.sortWatchesByParam("arrival date"));
+                case "1" -> menuHandler.displayAllWatches(watchService.sortWatchesByParam("price"));
+                case "2" -> menuHandler.displayAllWatches(watchService.sortWatchesByParam("color"));
+                case "3" -> menuHandler.displayAllWatches(watchService.sortWatchesByParam("arrival date"));
                 case "4" -> running = false;
                 default -> watchView.printMessage("\nInvalid choice");
             }

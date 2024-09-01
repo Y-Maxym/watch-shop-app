@@ -1,11 +1,11 @@
-package com.watch.shop.app.view;
+package com.watch.shop.app.controller;
 
-public class ViewConstants {
+public class MenuConstants {
 
     public static final String START_SEPARATOR = "_".repeat(97);
     public static final String END_SEPARATOR = "|" + "_".repeat(95) + "|";
     public static final String FORMAT_HEADER = "| %-12s| %-26s| %-11s| %-11s| %-11s| %-13s|%n";
-    public static final String FORMAT_SEPARATOR = "| %-12s| %-26s| %-11s| %-11s| %-11s| %-13s|%n";
+    public static final String FORMAT_SEPARATOR = "|%-12s|%-26s|%-11s|%-11s|%-11s|%-13s|%n";
     public static final String FORMAT_ROW = "| %-12s| %-26s| %-11s| %-11s| %-11s| %-13s|%n";
 
     public static final String MENU = """
@@ -23,4 +23,7 @@ public class ViewConstants {
              3. Arrival Date
              4. Exit
             """;
+    public static final String TOTAL_COST_MESSAGE = """
+            \nTotal cost:
+             %.2f""";
 }
