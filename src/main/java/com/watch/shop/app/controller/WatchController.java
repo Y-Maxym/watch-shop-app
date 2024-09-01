@@ -3,54 +3,58 @@ package com.watch.shop.app.controller;
 import com.watch.shop.app.model.entity.Watch;
 import com.watch.shop.app.model.service.WatchService;
 import com.watch.shop.app.view.WatchView;
-import lombok.RequiredArgsConstructor;
 
 import static com.watch.shop.app.util.Constants.INVALID_CHOICE_MESSAGE;
 import static com.watch.shop.app.util.Constants.INVALID_INPUT_MESSAGE;
 
-@RequiredArgsConstructor
 public class WatchController {
 
-    private final WatchService watchService;
-    private final WatchView watchView;
+    private final WatchService service;
+    private final WatchView view;
     private final MenuHandler menuHandler;
 
-    public void run() {
-        boolean running = true;
+    public WatchController(WatchService service, WatchView view) {
+        this.service = service;
+        this.view = view;
+        this.menuHandler = new MenuHandler(view);
+    }
 
-        while (running) {
+    public void run() {
+        boolean isRunning = true;
+
+        while (isRunning) {
             String choice = menuHandler.printMainMenu();
 
             switch (choice) {
-                case "1" -> menuHandler.displayAllWatches(watchService.getWatches());
+                case "1" -> menuHandler.displayAllWatches(service.getWatches());
                 case "2" -> sortChoice();
-                case "3" -> menuHandler.displayTotalCost(watchService.getTotalCost());
+                case "3" -> menuHandler.displayTotalCost(service.getTotalCost());
                 case "4" -> {
                     try {
                         Watch watch = menuHandler.printNewWatchMenu();
-                        watchService.insertWatch(watch);
+                        service.insertWatch(watch);
                     } catch (Exception e) {
-                        watchView.printMessage(INVALID_INPUT_MESSAGE);
+                        view.printMessage(INVALID_INPUT_MESSAGE);
                     }
                 }
-                case "5" -> running = false;
-                default -> watchView.printMessage(INVALID_CHOICE_MESSAGE);
+                case "5" -> isRunning = false;
+                default -> view.printMessage(INVALID_CHOICE_MESSAGE);
             }
         }
     }
 
     private void sortChoice() {
-        boolean running = true;
+        boolean isRunning = true;
 
-        while (running) {
+        while (isRunning) {
             String param = menuHandler.printSortMenu();
 
             switch (param) {
-                case "1" -> menuHandler.displayAllWatches(watchService.getSortedWatchesByPrice());
-                case "2" -> menuHandler.displayAllWatches(watchService.getSortedWatchesByColor());
-                case "3" -> menuHandler.displayAllWatches(watchService.getSortedWatchesByArrivalDate());
-                case "4" -> running = false;
-                default -> watchView.printMessage(INVALID_CHOICE_MESSAGE);
+                case "1" -> menuHandler.displayAllWatches(service.getSortedWatchesByPrice());
+                case "2" -> menuHandler.displayAllWatches(service.getSortedWatchesByColor());
+                case "3" -> menuHandler.displayAllWatches(service.getSortedWatchesByArrivalDate());
+                case "4" -> isRunning = false;
+                default -> view.printMessage(INVALID_CHOICE_MESSAGE);
             }
         }
     }

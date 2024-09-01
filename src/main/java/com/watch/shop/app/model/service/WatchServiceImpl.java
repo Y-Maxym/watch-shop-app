@@ -10,11 +10,11 @@ import java.util.List;
 
 public class WatchServiceImpl implements WatchService {
 
-    private final WatchStore watchStore = new WatchStore();
+    private final WatchStore store = new WatchStore();
 
     @Override
     public List<Watch> getWatches() {
-        return Collections.unmodifiableList(watchStore.getWatches());
+        return Collections.unmodifiableList(store.getWatches());
     }
 
     @Override
@@ -34,18 +34,18 @@ public class WatchServiceImpl implements WatchService {
 
     @Override
     public BigDecimal getTotalCost() {
-        return watchStore.getWatches().stream()
+        return store.getWatches().stream()
                 .map(Watch::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     @Override
     public void insertWatch(Watch watch) {
-        watchStore.addWatch(watch);
+        store.addWatch(watch);
     }
 
     private List<Watch> getSortedWatchesByParam(Comparator<? super Watch> comparator) {
-        return watchStore.getWatches().stream()
+        return store.getWatches().stream()
                 .sorted(comparator)
                 .toList();
     }

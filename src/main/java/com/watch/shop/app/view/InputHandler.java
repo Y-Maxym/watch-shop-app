@@ -1,4 +1,4 @@
-package com.watch.shop.app.controller;
+package com.watch.shop.app.view;
 
 import java.util.Scanner;
 
