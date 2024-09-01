@@ -1,8 +1,8 @@
 package com.watch.shop.app;
 
 import com.watch.shop.app.controller.WatchController;
-import com.watch.shop.app.service.WatchService;
-import com.watch.shop.app.service.WatchServiceImpl;
+import com.watch.shop.app.model.service.WatchService;
+import com.watch.shop.app.model.service.WatchServiceImpl;
 import com.watch.shop.app.view.WatchView;
 
 public class Main {
@@ -11,6 +11,7 @@ public class Main {
         WatchService service = new WatchServiceImpl();
         WatchView view = new WatchView();
         WatchController controller = new WatchController(service, view);
+
         controller.run();
     }
 }

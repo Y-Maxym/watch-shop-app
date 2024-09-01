@@ -1,7 +1,8 @@
-package com.watch.shop.app.service;
+package com.watch.shop.app.model.service;
 
-import com.watch.shop.app.model.Watch;
+import com.watch.shop.app.model.entity.Watch;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface WatchService {
@@ -10,7 +11,7 @@ public interface WatchService {
 
     List<Watch> sortWatchesByParam(String param);
 
-    Double getTotalCost();
+    BigDecimal getTotalCost();
 
     void insertWatch(Watch watch);
 }
